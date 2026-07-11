@@ -1,94 +1,18 @@
 ---
 name: handoff
-description: "会话结束前回写交接文档。记录本轮完成项、验证结果、残留问题、下一轮目标，确保下一轮能无损恢复。"
-when_to_use: "暂停一下, 写handoff, 会话结束, 交接一下, pause here, write handoff, save progress, wrap up"
+description: Compact the current conversation into a handoff document for another agent to pick up.
+argument-hint: "What will the next session be used for?"
+disable-model-invocation: true
 ---
 
-# Handoff: 交接文档
+Write a handoff document summarising the current conversation so a fresh agent can continue the work. Save to the temporary directory of the user's OS - not the current workspace.
 
-请总结当前项目状态,方便开启新对话继续开发。把本轮状态回写到 `tmp/handoff.md`
+Include a "suggested skills" section in the document, which suggests skills that the agent should invoke.
 
-可参考完整示例：`handoff/example/article-draft-autosave.md`
+Do not duplicate content already captured in other artifacts (specs, plans, ADRs, issues, commits, diffs). Reference them by path or URL instead.
 
-## 标准流程
+Redact any sensitive information, such as API keys, passwords, or personally identifiable information.
 
-1. 总结本轮完成的工作
-2. 记录验证结果（基于证据）
-3. 列出残留问题
-4. 定义下一轮最小目标
-5. 写入 `tmp/handoff.md`
+If the user passed arguments, treat them as a description of what the next session will focus on and tailor the doc accordingly.
 
-## 编写原则
 
-- 区分“已完成的功能”和“本轮完成”：前者是累计状态，后者是本轮增量。
-- 验证结果必须有证据：写清命令、结果、手动验证动作和观察到的现象。
-- 未验证的内容也要显式记录：使用未勾选项并说明原因，避免假装已经验证。
-- 残留问题要写影响、已尝试路径、可能原因和下一步建议，避免下一轮重复踩坑。
-- 重要约束要分清相关文件、相关文档、工程约束和业务约束。
-- 代码交接时优先记录当前分支、HEAD、工作区状态和主要改动文件。
-
-## 输出格式
-
-写入 `tmp/handoff.md` 的内容：
-
-```markdown
-# Handoff - [一句话描述该handoff的主题]
-
-## 项目目标
--
-
-## 当前技术栈
--
-
-## 代码状态
-- 当前分支：[branch-name]
-- 当前 HEAD：[commit-sha 或 未记录]
-- 工作区状态：[干净 / 有未提交修改 / 未检查]
-- 主要改动文件：
-  - [path/to/file]
-
-## 已完成的功能
-- [累计已具备的功能 1]
-- [累计已具备的功能 2]
-
-## 本轮完成
-- [具体完成项 1]
-- [具体完成项 2]
-
-## 重要约束
-
-### 相关源代码文件
-- [path/to/source]
-
-### 相关文档
-- [path/to/doc]
-
-### 工程约束
-- [框架、架构、依赖、性能、兼容性等约束]
-
-### 业务约束
-- [用户流程、数据规则、产品边界等约束]
-
-## 残留问题
-
-### 问题 1：[问题标题]
-- 影响：[对用户、开发、测试或数据的影响]
-- 已尝试：[尝试过但未跑通或未完全解决的路径]
-- 可能原因：[当前判断；不确定时明确写“不确定”]
-- 下一步建议：[下一轮最小可执行动作]
-
-## 下一轮目标
-[用简洁凝练清晰的一段话描述下轮要做什么]
-
-## 关键决策
-- [本轮做出的重要决策及其原因]
-
-## 本轮的验证结果
-- [x] 构建：[命令] 通过
-- [x] 测试：[命令] X/Y 通过
-- [x] 手动：[具体操作]，确认 [现象]
-- [ ] 未验证：[场景或命令]，原因：[原因]
-
-## 必须测试的场景
-[列出下轮需要做的回归测试]
-```

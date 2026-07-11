@@ -1,13 +1,11 @@
-# 好测试和坏测试 (Good and Bad Tests)
+# Good and Bad Tests
 
-## 好测试 (Good Tests)
+## Good Tests
 
-**集成风格 (Integration-style)**：通过真实接口测试，而不是内部部件的 mock。
-
-> Test through real interfaces, not mocks of internal parts.
+**Integration-style**: Test through real interfaces, not mocks of internal parts.
 
 ```typescript
-// 好 (GOOD): 测试可观察行为
+// GOOD: Tests observable behavior
 test("user can checkout with valid cart", async () => {
   const cart = createCart();
   cart.add(product);
@@ -16,27 +14,20 @@ test("user can checkout with valid cart", async () => {
 });
 ```
 
-特征 (Characteristics)：
+Characteristics:
 
-- 测试用户/调用者关心的行为
-  > Tests behavior users/callers care about
-- 仅使用公共 API
-  > Uses public API only
-- 在内部重构中存活
-  > Survives internal refactors
-- 描述"什么"，不是"如何"
-  > Describes WHAT, not HOW
-- 每个测试一个逻辑断言
-  > One logical assertion per test
+- Tests behavior users/callers care about
+- Uses public API only
+- Survives internal refactors
+- Describes WHAT, not HOW
+- One logical assertion per test
 
-## 坏测试 (Bad Tests)
+## Bad Tests
 
-**实现细节测试 (Implementation-detail tests)**：与内部结构耦合。
-
-> Coupled to internal structure.
+**Implementation-detail tests**: Coupled to internal structure.
 
 ```typescript
-// 坏 (BAD): 测试实现细节
+// BAD: Tests implementation details
 test("checkout calls paymentService.process", async () => {
   const mockPayment = jest.mock(paymentService);
   await checkout(cart, payment);
@@ -44,33 +35,45 @@ test("checkout calls paymentService.process", async () => {
 });
 ```
 
-红旗 (Red flags)：
+Red flags:
 
-- Mock 内部协作者
-  > Mocking internal collaborators
-- 测试私有方法
-  > Testing private methods
-- 断言调用次数/顺序
-  > Asserting on call counts/order
-- 在无行为变更的重构时测试失败
-  > Test breaks when refactoring without behavior change
-- 测试名称描述"如何"而不是"什么"
-  > Test name describes HOW not WHAT
-- 通过外部方式而不是接口验证
-  > Verifying through external means instead of interface
+- Mocking internal collaborators
+- Testing private methods
+- Asserting on call counts/order
+- Test breaks when refactoring without behavior change
+- Test name describes HOW not WHAT
+- Verifying through external means instead of interface
 
 ```typescript
-// 坏 (BAD): 绕过接口验证
+// BAD: Bypasses interface to verify
 test("createUser saves to database", async () => {
   await createUser({ name: "Alice" });
   const row = await db.query("SELECT * FROM users WHERE name = ?", ["Alice"]);
   expect(row).toBeDefined();
 });
 
-// 好 (GOOD): 通过接口验证
+// GOOD: Verifies through interface
 test("createUser makes user retrievable", async () => {
   const user = await createUser({ name: "Alice" });
   const retrieved = await getUser(user.id);
   expect(retrieved.name).toBe("Alice");
 });
 ```
+
+**Tautological tests**: Expected value restates the implementation, so the test passes by construction.
+
+```typescript
+// BAD: Expected value is recomputed the way the code computes it
+test("calculateTotal sums line items", () => {
+  const items = [{ price: 10 }, { price: 5 }];
+  const expected = items.reduce((sum, i) => sum + i.price, 0);
+  expect(calculateTotal(items)).toBe(expected);
+});
+
+// GOOD: Expected value is an independent, known literal
+test("calculateTotal sums line items", () => {
+  expect(calculateTotal([{ price: 10 }, { price: 5 }])).toBe(15);
+});
+```
+
+
