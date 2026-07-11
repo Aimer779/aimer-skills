@@ -115,10 +115,12 @@
     }
   ],
   "profiles": {
-    "new-project": ["project-init", "spec-write"],
-    "landing-page": ["design", "grill-with-docs"],
-    "frontend": ["design", "tdd"],
-    "quality-refactor": ["tdd", "grilling"],
+    "new-project": ["think", "project-init", "spec-write"],
+    "landing-page": ["think", "ui"],
+    "frontend": ["think", "ui", "tdd"],
+    "quality-refactor": ["think", "tdd"],
+    "plan-review": ["think", "grilling"],
+    "domain-planning": ["think", "grill-with-docs"],
     "session-handoff": ["handoff"]
   }
 }
