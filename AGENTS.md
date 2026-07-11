@@ -2,16 +2,14 @@
 
 ## 仓库定位
 
-这是 Aimer 的个人 skills 中心仓库，用来集中积累、维护和复用不同领域的 AI
-工作流与项目指导能力。
+这是 Aimer 的个人 skills 中心仓库，用来集中积累、维护和复用不同领域的 AI工作流与项目指导能力。
 
 - GitHub：Aimer779/aimer-skills
 - 本地中心仓库：D:\aimer-skills
-- 仓库类型：以 Markdown、JSON 和 PowerShell 为主的 skill 文档仓库
+- 仓库类型：以 Markdown、JSON 和 PowerShell 为主的 skills 仓库
 - 核心目标：中心仓库维护一次，其他项目通过软连接读取最新版本
 
-不要把这里理解成某个业务项目。这里的主要产物是可复用的 skill、skill
-管理工具和 GEB 文档协议。
+不要把这里理解成某个业务项目。这里的主要产物是可复用的 skill、skill管理工具
 
 ## 目录结构
 
@@ -22,32 +20,10 @@
 ├─ scripts/
 │  └─ sync-skills.ps1                # 创建、修复和移除项目级 skill 链接
 └─ code/
-   ├─ design/SKILL.md                # UI、落地页和视觉设计
-   ├─ tdd/SKILL.md                   # 测试驱动开发
-   ├─ handoff/SKILL.md               # 会话交接
-   ├─ project-init/SKILL.md          # 项目初始化
-   ├─ spec-write/SKILL.md            # 最小 spec 编写
-   ├─ grill-with-docs/SKILL.md      # 基于文档的计划压力测试
-   ├─ grill-me/SKILL.md              # 计划和设计追问
-   ├─ aimer-skill-manager/SKILL.md   # 全局 skill 管理入口
-   └─ GEB-system/                    # GEB 分形文档协议和相关模板
 ~~~
 
-只有包含 SKILL.md 的目录才是 Codex 可发现的 skill。GEB-system、CLAUDE.md
-和 AGENTS.md 模板属于项目指导资产，不应自动当作 skill 安装。
+只有包含 SKILL.md 的目录才是 Agent 可发现的 skill。GEB-system、CLAUDE.md 和 AGENTS.md 模板属于项目指导资产，不应自动当作 skill 安装。
 
-## 当前 skill 体系
-
-| Skill | 主要用途 |
-|---|---|
-| design | 构建设计系统、落地页和前端视觉方案 |
-| tdd | 使用红-绿-重构循环进行测试驱动开发 |
-| handoff | 记录会话完成项、验证结果和下一轮目标 |
-| project-init | 初始化项目、环境和开发测试基础设施 |
-| spec-write | 把任务压缩成目标、范围、边界和验证方式明确的最小 spec |
-| grill-with-docs | 结合领域模型和文档压力测试计划 |
-| grill-me | 通过连续追问澄清计划和设计 |
-| aimer-skill-manager | 选择、链接、修复和同步项目 skills |
 
 ## Skill 管理方式
 
@@ -71,7 +47,7 @@ AIMER_SKILLS_ROOT=D:\aimer-skills
   -> D:\aimer-skills\code/<skill-id>
 ~~~
 
-不要复制 skill 内容到其他项目。中心仓库中的修改会通过软连接自动生效；
+不要复制 skill 内容到其他项目。中心仓库中的修改会通过软链接自动生效；
 新增、重命名或移除 skill 时，需要重新执行同步。
 
 推荐使用 manager：
@@ -108,28 +84,7 @@ $aimer-skill-manager
 
 ### 修改 manager
 
-manager 的源码位于 code/aimer-skill-manager/SKILL.md。修改后，全局软连接会
-直接读取最新内容，不需要复制或重新安装。若 Codex 当前会话没有刷新，启动
-新会话或重启 Codex。
-
-### 修改 GEB 文档
-
-GEB-system 是协议和模板参考区。修改其中的 AGENTS 或 CLAUDE 模板时，注意
-它们分别服务于不同的项目指导体系，不要混淆文件名或引用路径。
-
-## AI 协作约定
-
-- 开始工作前先阅读本文件，并根据任务需要读取最接近的目录说明。
-- 搜索代码、日志和纯文本时使用 rg；不要用 PowerShell Get-Content 或
-  Select-String 做搜索。
-- Git 命令使用 rtk git 前缀；GitHub CLI 命令使用 rtk gh 前缀。
-- 文件编辑使用 apply_patch，保留用户已有的未提交修改。
-- 这是文档和脚本仓库，通常不需要安装生产依赖。
-- 如果确实需要新增生产依赖，先向用户确认。
-- 修改目录结构、catalog、manager 或同步脚本后，必须进行相应的干运行或
-  最小可复现测试。
-- 完成修改后检查 git diff --check、同步脚本输出和 Git 工作区状态。
-- 不要把本机绝对路径、令牌、密钥或个人凭据写入仓库。
+manager 的源码位于 code/aimer-skill-manager/SKILL.md。修改后，全局软链接会直接读取最新内容，不需要复制或重新安装。若 Codex 当前会话没有刷新，启动新会话或重启 Codex。
 
 ## 变更完成标准
 
