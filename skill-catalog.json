@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "repository": {
+    "name": "Aimer779/aimer-skills",
+    "rootEnv": "AIMER_SKILLS_ROOT",
+    "skillsRoot": "code"
+  },
+  "defaults": {
+    "projectTarget": ".agents/skills",
+    "stateFile": ".aimer-skills.json",
+    "linkType": "auto"
+  },
+  "skills": [
+    {
+      "id": "design",
+      "path": "design",
+      "scope": "project",
+      "summary": "构建设计系统、落地页和前端视觉方案",
+      "tags": ["UI", "landing-page", "visual-design"],
+      "triggers": ["设计页面", "落地页", "视觉优化", "screenshot"],
+      "dependsOn": [],
+      "enabled": true
+    },
+    {
+      "id": "tdd",
+      "path": "tdd",
+      "scope": "project",
+      "summary": "使用红-绿-重构循环进行测试驱动开发",
+      "tags": ["test", "refactor", "quality"],
+      "triggers": ["测试驱动", "红-绿-重构", "测试先行", "集成测试"],
+      "dependsOn": [],
+      "enabled": true
+    },
+    {
+      "id": "handoff",
+      "path": "handoff",
+      "scope": "project",
+      "summary": "在会话结束时记录交接信息，保证下一轮可以无损恢复",
+      "tags": ["handoff", "continuity", "documentation"],
+      "triggers": ["交接", "结束会话", "下一轮", "恢复上下文"],
+      "dependsOn": [],
+      "enabled": true
+    },
+    {
+      "id": "project-init",
+      "path": "project-init",
+      "scope": "project",
+      "summary": "初始化项目、基础框架、环境和开发测试基础设施",
+      "tags": ["init", "scaffold", "setup"],
+      "triggers": ["项目初始化", "搭建项目", "配置环境", "基础框架"],
+      "dependsOn": [],
+      "enabled": true
+    },
+    {
+      "id": "spec-write",
+      "path": "spec-write",
+      "scope": "project",
+      "summary": "把任务压缩成目标、范围、边界和验证方式明确的最小 spec",
+      "tags": ["spec", "planning", "scope"],
+      "triggers": ["写 spec", "拆解任务", "明确范围", "验收标准"],
+      "dependsOn": [],
+      "enabled": true
+    },
+    {
+      "id": "grill-with-docs",
+      "path": "grill-with-docs",
+      "scope": "project",
+      "summary": "结合领域模型和项目文档压力测试计划，并同步决策文档",
+      "tags": ["planning", "domain-model", "ADR"],
+      "triggers": ["压力测试计划", "挑战方案", "领域模型", "ADR"],
+      "dependsOn": [],
+      "enabled": true
+    },
+    {
+      "id": "grill-me",
+      "path": "grill-me",
+      "scope": "project",
+      "summary": "通过连续追问澄清计划、设计和决策树",
+      "tags": ["planning", "interview", "decision"],
+      "triggers": ["盘问我", "挑战设计", "压力测试方案", "grill me"],
+      "dependsOn": [],
+      "enabled": true
+    },
+    {
+      "id": "aimer-skill-manager",
+      "path": "aimer-skill-manager",
+      "scope": "global",
+      "kind": "manager",
+      "bootstrap": true,
+      "summary": "从中心仓库选择、链接和同步项目 skills",
+      "tags": ["skills", "bootstrap", "sync"],
+      "triggers": ["初始化项目", "安装共享 skill", "同步 skill", "建立 skill 链接"],
+      "dependsOn": [],
+      "enabled": true
+    }
+  ],
+  "profiles": {
+    "new-project": ["project-init", "spec-write"],
+    "landing-page": ["design", "grill-with-docs"],
+    "frontend": ["design", "tdd"],
+    "quality-refactor": ["tdd", "grill-me"],
+    "session-handoff": ["handoff"]
+  }
+}
