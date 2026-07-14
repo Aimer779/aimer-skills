@@ -1,0 +1,4 @@
+interface:
+  display_name: "Context7 Docs"
+  short_description: "Verify current docs when local evidence is insufficient"
+  default_prompt: "Use $context7-docs to check local evidence first, then verify current external-library documentation when needed."

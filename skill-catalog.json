@@ -112,13 +112,43 @@
       "triggers": ["初始化项目", "安装共享 skill", "同步 skill", "建立 skill 链接"],
       "dependsOn": [],
       "enabled": true
+    },
+    {
+      "id": "news-aggregator-skill",
+      "path": "news-aggregator-skill",
+      "scope": "project",
+      "summary": "聚合 44+ 个科技、财经、AI 和国际新闻源并生成中文深度简报",
+      "tags": ["news", "rss", "analysis", "AI"],
+      "triggers": ["新闻简报", "科技新闻", "财经新闻", "AI 新闻", "国际新闻", "深度新闻", "如意如意"],
+      "dependsOn": [],
+      "enabled": true
+    },
+    {
+      "id": "kill-ai-slop",
+      "path": "kill-ai-slop",
+      "scope": "project",
+      "summary": "扫描并清理 Web 项目中模板化的 AI 视觉与文案特征",
+      "tags": ["UI", "frontend", "visual-design", "copywriting", "audit"],
+      "triggers": ["kill AI slop", "去除 AI 味", "清理 AI 痕迹", "让页面不像 AI 生成", "视觉审查"],
+      "dependsOn": [],
+      "enabled": true
+    },
+    {
+      "id": "context7-docs",
+      "path": "context7-docs",
+      "scope": "project",
+      "summary": "使用 Context7 CLI 查询最新技术文档并指导准确编码",
+      "tags": ["documentation", "Context7", "API", "coding"],
+      "triggers": ["查询技术文档", "最新 API", "框架用法", "版本迁移", "库配置", "context7", "ctx7"],
+      "dependsOn": [],
+      "enabled": true
     }
   ],
   "profiles": {
-    "new-project": ["think", "project-init", "spec-write"],
-    "landing-page": ["think", "ui"],
-    "frontend": ["think", "ui", "tdd"],
-    "quality-refactor": ["think", "tdd"],
+    "new-project": ["think", "project-init", "spec-write", "context7-docs"],
+    "landing-page": ["think", "ui", "kill-ai-slop", "context7-docs"],
+    "frontend": ["think", "ui", "tdd", "kill-ai-slop", "context7-docs"],
+    "quality-refactor": ["think", "tdd", "context7-docs"],
     "plan-review": ["think", "grilling"],
     "domain-planning": ["think", "grill-with-docs"],
     "session-handoff": ["handoff"]
